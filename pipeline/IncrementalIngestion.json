@@ -31,7 +31,7 @@
 					"source": {
 						"type": "AzureSqlSource",
 						"sqlReaderQuery": {
-							"value": "select * from @{pipeline().parameters.schema}.\n@{pipeline().parameters.table} where\n@{pipeline().parameters.cdc_col} > '@{activity('last_cdc').output.firstRow.cdc}'",
+							"value": "SELECT *\nFROM @{pipeline().parameters.schema}.@{pipeline().parameters.table}\nWHERE @{pipeline().parameters.cdc_col} >\n'@{if(\n    empty(pipeline().parameters.from_date),\n    activity('last_cdc').output.firstRow[0].cdc,\n    pipeline().parameters.from_date\n)}'",
 							"type": "Expression"
 						},
 						"queryTimeout": "02:00:00",
@@ -171,7 +171,11 @@
 							"typeProperties": {
 								"dataset": {
 									"referenceName": "ParquetDynamic",
-									"type": "DatasetReference"
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "bronze",
+										"folder": "Users"
+									}
 								},
 								"enableLogging": false,
 								"storeSettings": {
@@ -298,6 +302,9 @@
 				"type": "String"
 			},
 			"cdc_col": {
+				"type": "String"
+			},
+			"from_date": {
 				"type": "String"
 			}
 		},
