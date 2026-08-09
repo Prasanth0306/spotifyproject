@@ -1,0 +1,15 @@
+{
+	"name": "spotifypkdf",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "17df3a3d-7e56-4fa3-b907-dcf731541655",
+		"tenantId": "8a164b76-e4f5-48ad-bd50-f5ec0302e54c"
+	}
+}
