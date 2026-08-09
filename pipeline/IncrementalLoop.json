@@ -8,6 +8,10 @@
 				"dependsOn": [],
 				"userProperties": [],
 				"typeProperties": {
+					"items": {
+						"value": "@pipeline().parameters.loop_input",
+						"type": "Expression"
+					},
 					"activities": [
 						{
 							"name": "SqlTODatalake",
@@ -38,7 +42,7 @@
 								"source": {
 									"type": "AzureSqlSource",
 									"sqlReaderQuery": {
-										"value": "SELECT *\nFROM @{item().schema}.@{item().table}\nWHERE @{item().cdc_col} >\n'@{if(\n    empty(item().from_date),\n    activity('last_cdc').output.firstRow[0].cdc,\n    item().from_date\n)}'",
+										"value": "SELECT *\nFROM @{item().schema}.@{item().table}\nWHERE @{item().cdc_col} >\n'@{if(\n    empty(item().from_date),\n    activity('last_cdc').output.firstRow.cdc,\n    item().from_date\n)}'",
 										"type": "Expression"
 									},
 									"queryTimeout": "02:00:00",
